@@ -1,0 +1,68 @@
+{"id":132,"name":"CAMOSUNATE ADULT (14 YEARS AND ABOVE)","price":700,"quantity":"1","attributes":[],"conditions":[],"associatedModel":{"product_id":132,"product_name":"CAMOSUNATE ADULT (14 YEARS AND ABOVE)","category_id":3,"manufacture_id":59,"product_short_description":"AMODIAQUINE BASE 300MG + ARTESUNATE 100MG (ADULT TABLET)","product_long_description":"CONTAINS AMODIAQUINE BASE 300MG ARTESUNATE 100MG (ADULT TABLET)","product_price":700,"product_image":"images\/kP5X59XlyMuKpuosykeh,jpg","product_size":"1 pack by 12 tablets","product_shipping_price":700,"publication_status":1,"prescription":"false","created_at":null,"updated_at":null,"sold":0}}
+
+900 = total price
+
+	
+shipping_id
+shipping_email
+shipping_first_name
+shipping_last_name
+shipping_address
+shipping_mobile_number
+shipping_city
+
+
+241
+michaelmagnificent69@gmail.com
+Obinna
+Ogbue
+No 3 Gamji Street, brighter
+08069153379
+Minna
+
+ @foreach ($random_articles as $key => $article)
+                    <div class="row">
+                        <!-- Single Post -->
+                        
+                            @if ($key > 0)
+                                <div class="col-12 col-md-6">
+                                    <div class="single-blog-post style-3">
+                                        {{-- <h5 class="text-center">
+                                            LOVE FROM DIASPORA …
+                                        </h5> --}}
+                                        {{-- <br> --}}
+                                        <div class="post-thumb">
+                                            <div class="single-blog-post featured-post mb-30">
+                                                <div>
+                                                    <a href="{{URL::to('articles/'.$article['article_type'].'/'.$article['id'])}}"><img style="width: 400px; height: 500px" src="/dvon_files/public/uploads/{{$article['article_intro_image']}}" alt=""></a>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Single Post -->
+                                <div class="col-12 col-md-6">
+                                    <div class="single-blog-post style-3">
+                                        <div class="post-data">
+                                            {{-- <br><br> --}}
+                                            <h4>{{$article['article_title']}}:</h4>
+                                            <div class="text-left" style="word-break: break-word">
+                                                <?php echo substr($article['article_intro'],0,500)?>...
+                                            </div>
+                                            
+                                            {{-- {{$article['article_intro']}} --}}
+                                            <p class="post-author">
+                                                <a class="text-danger" href="{{URL::to('articles/'.$article['article_type'].'/'.$article['id'])}}">
+                                                    … Read Story here…
+                                                </a>
+                                            </p>
+                                            <div class="align-items-center">
+                                                <a href="#" class="post-like"><img src="{{asset('site/img/core-img/like.png')}}" alt=""> <span>392</span></a>
+                                                <a href="#" class="post-comment"><img src="{{asset('site/img/core-img/chat.png')}}" alt=""> <span>10</span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                    </div>
+                @endforeach
