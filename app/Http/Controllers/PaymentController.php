@@ -26,7 +26,7 @@ class PaymentController extends Controller
                     if(!$reference){
                       die('No reference supplied');
                     }
-                    
+                    $public_key = "Bearer ".env('PAYSTACK_SECRET_KEY');
                     curl_setopt_array($curl, array(
                       CURLOPT_URL => "https://api.paystack.co/transaction/verify/" . rawurlencode($reference),
                       CURLOPT_RETURNTRANSFER => true,
@@ -36,7 +36,7 @@ class PaymentController extends Controller
                       CURLOPT_HTTPHEADER => [
                         "accept: application/json",
                         // "authorization: Bearer sk_live_a6a7ba6dc6fdd5fed5d6490a51d52b693191026e",
-                        "authorization: Bearer sk_test_c388499eac2200cf3bfe64dd23315023fef090cb",
+                        "authorization: $public_key",
                         "cache-control: no-cache"
                       ],
                     ));
