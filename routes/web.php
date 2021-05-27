@@ -6,6 +6,7 @@ Route::get('/', function (Request $request) {
         $customer = DB::table('tbl_customer')
                       ->where('customer_id',$request::get('customer_id'))
                       ->first();
+                      
         // return response()->json($temp_data->total_price);
         // exit;
     return view('welcome',['total_price'=>$temp_data->total_price,
@@ -17,41 +18,41 @@ Route::get('/', function (Request $request) {
 
 use App\Http\Requests;
 
-// Route::post('/pay', 'PaymentController@redirectToGateway')->name('pay');
+Route::post('/pay', 'PaymentController@redirectToGateway')->name('pay');
 //for testing purpose
-Route::post('/pay', function(Request $request){
-    $url = "https://api.paystack.co/transaction/initialize";
-  $fields = [
-    // 'email' => "customer@email.com",
-    // 'amount' => "20000",
-    'email' => "customer@email.com",
-    'amount' => "20000",
-  ];
-  $fields_string = http_build_query($fields);
-  //open connection
-  $ch = curl_init();
+// Route::post('/pay', function(Request $request){
+//     $url = "https://api.paystack.co/transaction/initialize";
+//   $fields = [
+//     // 'email' => "customer@email.com",
+//     // 'amount' => "20000",
+//     'email' => "customer@email.com",
+//     'amount' => "20000",
+//   ];
+//   $fields_string = http_build_query($fields);
+//   //open connection
+//   $ch = curl_init();
   
-  //set the url, number of POST vars, POST data
-  curl_setopt($ch,CURLOPT_URL, $url);
-  curl_setopt($ch,CURLOPT_POST, true);
+//   //set the url, number of POST vars, POST data
+//   curl_setopt($ch,CURLOPT_URL, $url);
+//   curl_setopt($ch,CURLOPT_POST, true);
   
-  curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-  curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-    "Authorization: Bearer sk_test_c388499eac2200cf3bfe64dd23315023fef090cb",
-    "Cache-Control: no-cache",
-  ));
+//   curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+//   curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+//     "Authorization: Bearer sk_test_c388499eac2200cf3bfe64dd23315023fef090cb",
+//     "Cache-Control: no-cache",
+//   ));
   
-  //So that curl_exec returns the contents of the cURL; rather than echoing it
-  curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
-  curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,false); 
-  curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false); 
-  //execute post
-  $result = curl_exec($ch);
+//   //So that curl_exec returns the contents of the cURL; rather than echoing it
+//   curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
+//   curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,false); 
+//   curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false); 
+//   //execute post
+//   $result = curl_exec($ch);
   
-  $response = json_decode($result);
-  $payment_gatway_url = $response->data->authorization_url;
-  return redirect($payment_gatway_url);
-})->name('pay');
+//   $response = json_decode($result);
+//   $payment_gatway_url = $response->data->authorization_url;
+//   return redirect($payment_gatway_url);
+// })->name('pay');
 
 // Route::get('/payment/callback', 'PaymentController@handleGatewayCallback');
 Route::get('/payment/callback', function(){
@@ -60,7 +61,7 @@ Route::get('/payment/callback', function(){
     if(!$reference){
       die('No reference supplied');
     }
-    
+    $public_key = "Bearer ".env('PAYSTACK_SECRET_KEY');
     curl_setopt_array($curl, array(
       CURLOPT_URL => "https://api.paystack.co/transaction/verify/" . rawurlencode($reference),
       CURLOPT_RETURNTRANSFER => true,
@@ -69,7 +70,7 @@ Route::get('/payment/callback', function(){
       
       CURLOPT_HTTPHEADER => [
         "accept: application/json",
-        "authorization: Bearer sk_test_c388499eac2200cf3bfe64dd23315023fef090cb",
+        "authorization: $public_key",
         "cache-control: no-cache"
       ],
     ));
@@ -160,4 +161,3 @@ Route::get('/check-database', function(){
     // }
     return response()->json($products);
 });
-
