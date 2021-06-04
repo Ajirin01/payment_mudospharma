@@ -1,5 +1,6 @@
 <?php
 Route::get('/', function (Request $request) {
+      // return response()->json($request::get('customer_id'));
         $temp_data = DB::table('tbl_temp_data')
                       ->where('customer_id',$request::get('customer_id'))
                       ->first();
