@@ -9,9 +9,6 @@ use Paystack;
 
 class PaymentController extends Controller
 {
-
-
-
     public function redirectToGateway()
     {
         return Paystack::getAuthorizationUrl()->redirectNow();

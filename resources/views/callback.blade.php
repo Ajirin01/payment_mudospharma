@@ -35,7 +35,7 @@
                    
                 </h1>
                 <div >
-                    <form style="margin-left: 42.5% " action="http://mudos.com/" method="GET">
+                    <form style="margin-left: 42.5% " action="https://mudospharma.com/" method="GET">
                         @csrf
                         <input type="hidden" name="transaction_ID" value="{{Session::get('transaction_ID')}}"> <br>
 
